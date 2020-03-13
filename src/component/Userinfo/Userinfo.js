@@ -27,9 +27,9 @@ const Userinfo = (props) => {
             <Card className="main-card" style={{ width: '18rem' }}>
                 <Card.Img variant="top" src= {image} />
                 <Card.Body>
-                    <Card.Title>User Info</Card.Title>
+                    <Card.Title>{first_name}</Card.Title>
                     <Card.Text className = "card-text">
-                        <p>Name : {first_name}</p>
+                        {/* <p>Name : {first_name}</p> */}
                         <p>Email : {email}</p>
                         <p>Gender : {gender}</p>
                         <p>Salary : {salary}</p>
