@@ -1,0 +1,6 @@
+.user-container{
+    display: flex;
+}
+.main-user{
+    width: 70%;
+}
