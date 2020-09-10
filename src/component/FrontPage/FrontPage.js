@@ -1,65 +1,86 @@
 import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Nav} from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons"
+import Allusers from '../AllUsers/Allusers';
 
 const FrontPage = (props) => {
-  
     const key = 'Y63I9SgAE3BXKL-MZwxCAkxQuWi3uQY34ghklkhSPJA'
     const api = 'https://api.unsplash.com/search/photos?per_page=25'
 
     const [users, setUsers] = useState([])
-    console.log(users);
+
+    const [instaCount, setInstaCount] = useState([])
+    const [tweetCount, setTweetCount] = useState([])
+    console.log(instaCount);
     useEffect(() => {
-        fetch(`${api}&query=actress?&client_id=${key}`)
-        .then(res => res.json())
-        .then(data => {
-            const mainUser = data.results
-            setUsers(mainUser)
-    
-        })
+        async function Users() {
+            const response = await fetch(`${api}&query=users?&client_id=${key}`)
+            const data = await response.json()
+            setUsers(data.results)
+        }
+        Users()
     }, [])
 
-    const btnStyle = {
-        border: '1px solid gray',
-        background: 'none',
-        color: '#000',
-        padding: '0.4rem 3rem',
-        margin: '0.4rem 0rem'
+    const handleInstagram = (insta) => {
+        const newInstaUser = [...instaCount, insta]
+        setInstaCount(newInstaUser)
     }
+    const handleTwitter = (tweet) => {
+        const newTweetUser = [...tweetCount, tweet]
+        setTweetCount(newTweetUser)
+    }
+    
 
     return (
         <Container>
             <Row>
-            
-                {
-                    users.map( (user, i) =>
-                        (
-                        <Col md={4}>
-                            <Card style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src={user.urls.small} />
-                                <Card.Body>
-                                    <Card.Title> {user.user.name} </Card.Title>
-                                    <Card.Text>
-                                            {user.user.bio !== null ? user.user.bio : `Bio Not Available`}
-                                    </Card.Text>
-                                        <Button onClick={() => props.handleInstagram(user)} style={btnStyle}>
-                                            <FontAwesomeIcon icon={faInstagram} size="lg" />  {user.user.instagram_username ? user.user.instagram_username : 'Not Available'} +
-                                        </Button>
-                                        <Button onClick={() => props.handleTwitter(user)} style={btnStyle}>
-                                            <FontAwesomeIcon icon={faTwitter} size="lg" />  {user.user.instagram_username ? user.user.instagram_username : 'Not Available'} +
-                                        </Button>
-                                        
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))
-                }
-                
-                
+                <Col md={8}>
+                    {
+                        users.map(user => <Allusers
+                                user={user}
+                                handleInstagram={handleInstagram}
+                                handleTwitter={handleTwitter}
+                            >
+
+                            </Allusers>)
+                    }
+                </Col>
+                <Col md={4}>
+                    <h4> Instagram Added : {instaCount.length} </h4>
+                    <hr/>
+                    <ul>
+                        {
+                            instaCount.map(insta => (
+                                
+                                <li>
+                                    <hr />
+                                    <img src={insta.user.profile_image.small} alt=""/>
+                                     {insta.user.name}
+                                    <hr />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    <h4> Tweeter Added : {tweetCount.length} </h4>
+                    <hr/>
+                    <ul>
+                        {
+                            tweetCount.map(tweet => (
+                                <li>
+                                    <hr/>
+                                    <img src={tweet.user.profile_image.small} alt="" />
+                                    {tweet.user.name}
+                                    <hr/>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    
+
+                </Col>
             </Row>
+            
         </Container>
     );
 };
