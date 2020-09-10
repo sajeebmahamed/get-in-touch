@@ -13,9 +13,7 @@ const Allusers = (props) => {
         margin: '0.4rem 0rem'
     }
     return (
-        <Container>
-
-            <Col>
+            
                 <Card style={{ width: '18rem'}}>
                     <Card.Img variant="top" src={props.user.urls.small} />
                     <Card.Body>
@@ -32,8 +30,7 @@ const Allusers = (props) => {
 
                     </Card.Body>
                 </Card>
-            </Col>
-        </Container>
+           
     );
 };
 

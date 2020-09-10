@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Nav} from 'react-bootstrap';
+import { Container, Row, Col, Nav, Navbar} from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Allusers from '../AllUsers/Allusers';
@@ -35,50 +35,52 @@ const FrontPage = (props) => {
     return (
         <Container>
             <Row>
+                
                 <Col md={8}>
                     {
                         users.map(user => <Allusers
-                                user={user}
-                                handleInstagram={handleInstagram}
-                                handleTwitter={handleTwitter}
-                            >
+                            user={user}
+                            handleInstagram={handleInstagram}
+                            handleTwitter={handleTwitter}
+                        >
 
-                            </Allusers>)
+                        </Allusers>)
                     }
                 </Col>
                 <Col md={4}>
                     <h4> Instagram Added : {instaCount.length} </h4>
-                    <hr/>
+                    <hr />
                     <ul>
                         {
                             instaCount.map(insta => (
-                                
+
                                 <li>
                                     <hr />
-                                    <img src={insta.user.profile_image.small} alt=""/>
-                                     {insta.user.name}
+                                    <img src={insta.user.profile_image.small} alt="" />
+                                    {insta.user.name}
                                     <hr />
                                 </li>
                             ))
                         }
                     </ul>
                     <h4> Tweeter Added : {tweetCount.length} </h4>
-                    <hr/>
+                    <hr />
                     <ul>
                         {
                             tweetCount.map(tweet => (
                                 <li>
-                                    <hr/>
+                                    <hr />
                                     <img src={tweet.user.profile_image.small} alt="" />
                                     {tweet.user.name}
-                                    <hr/>
+                                    <hr />
                                 </li>
                             ))
                         }
                     </ul>
-                    
+
 
                 </Col>
+                
             </Row>
             
         </Container>
